@@ -107,3 +107,8 @@ ul.navbar li:hover {
 .hidden {
   display: none;
 }
+
+img {
+  height:40%;
+  width:80%;
+}
