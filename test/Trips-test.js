@@ -7,11 +7,13 @@ describe("Trips", () => {
     let trips;
     let destinations;
     let currentUser;
+    let date;
 
     beforeEach(() => {
         trips = new Trips (tripsData);
         destinations = destinationsData;
         currentUser = {id: 1, name: 'Ham Leadbeater', travelerType: 'relaxer'}
+        date = "2022/06/08"
     })
 
     it("should take in trips data", () => {
@@ -25,7 +27,7 @@ describe("Trips", () => {
                 "userID": 1,
                 "destinationID": 1,
                 "travelers": 1,
-                "date": "2022/09/16",
+                "date": "2021/09/16",
                 "duration": 8,
                 "status": "approved",
                 "suggestedActivities": []
@@ -53,7 +55,22 @@ describe("Trips", () => {
         ])
     })
 
-    it("should get the total spent for all trips", () => {
-        expect(trips.getTotalSpent(currentUser, destinations)).to.deep.equal(0)
+    it("should get past trips by user and date", () => {
+        expect(trips.getPastTrips(currentUser, date)).to.deep.equal([{
+            "id": 1,
+            "userID": 1,
+            "destinationID": 1,
+            "travelers": 1,
+            "date": "2021/09/16",
+            "duration": 8,
+            "status": "approved",
+            "suggestedActivities": []
+            }])
     })
+
+    it("should get the total spent for all trips", () => {
+        expect(trips.getTotalSpent(currentUser, destinations, date)).to.equal(5401)
+    })
+
+
 })
