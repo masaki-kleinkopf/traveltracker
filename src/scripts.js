@@ -11,7 +11,7 @@ let allTravelersData;
 let singleTravelerData;
 let allTripsData;
 let allDestinationsData;
-let userId = 17git
+let userId = 17;
 let currentDate;
 let userTrips;
 
