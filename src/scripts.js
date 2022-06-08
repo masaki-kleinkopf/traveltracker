@@ -11,7 +11,7 @@ let allTravelersData;
 let singleTravelerData;
 let allTripsData;
 let allDestinationsData;
-let userId = 2
+let userId = 17git
 let currentDate;
 let userTrips;
 
@@ -55,6 +55,7 @@ const loadCards = () => {
         })
         cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
+            <img src =${foundDestination.image}>
             destination: ${foundDestination.destination}<br><br>
             travelers: ${trip.travelers}<br><br>
             date: ${trip.date}
