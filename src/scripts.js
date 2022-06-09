@@ -50,6 +50,7 @@ const fetchData = () => {
 const loadCards = () => {
     cardDisplay.innerHTML = ''
     userTrips.forEach(trip => {
+        //refactor to add to Destinations class
         let foundDestination = allDestinationsData.find(destination => {
             return destination.id === trip.destinationID
         })
@@ -67,5 +68,4 @@ const loadCards = () => {
 
 window.addEventListener("load", () => {
     fetchData()
-
  });
