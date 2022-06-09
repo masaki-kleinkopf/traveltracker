@@ -6,41 +6,47 @@ import './images/turing-logo.png'
 
 import { getData, postData } from "./apiCalls.js";
 import Trips from "../src/Trips.js"
+import Travelers from "../src/Travelers.js"
 
 let allTravelersData;
-let singleTravelerData;
 let allTripsData;
 let allDestinationsData;
-let userId = 17;
+let currentUser;
 let currentDate;
 let userTrips;
 
 const cardDisplay = document.querySelector(".data-display");
 
-const createAllData = (data) =>{
-    allTravelersData = data[0].travelers;
-    singleTravelerData = data[1];
-    allTripsData = new Trips (data[2].trips);
-    allDestinationsData = data[3].destinations;
+const fetchCurrentUser = () => {
+    getData("travelers", allTravelersData.getRandomTraveler().id)
+        .then(data => {
+            currentUser = data
+            createUserTrips();
+            loadCards();
+        })
+}
 
-    createUserTrips();
+const createAllData = (data) =>{
+    allTravelersData = new Travelers (data[0].travelers);
+    allTripsData = new Trips (data[1].trips);
+    allDestinationsData = data[2].destinations;
+    fetchCurrentUser()
 }
 
 const createUserTrips = () => {
-    userTrips = allTripsData.getAllTrips(singleTravelerData)
+    userTrips = allTripsData.getAllTrips(currentUser)
     console.log(userTrips)
 }
+
+
 
 const fetchData = () => {
     Promise.all([
         getData("travelers"),
-        getData("travelers",userId),
         getData("trips"),
         getData("destinations"),
       ]).then(data => {
-          console.log(data)
         createAllData(data)
-        loadCards()
       })
       .catch((error) =>
       console.log(error, "Error")
@@ -64,6 +70,10 @@ const loadCards = () => {
         `
     })
 }
+
+// const updateWelcome = () => {
+
+// }
 
 
 window.addEventListener("load", () => {
