@@ -15,22 +15,30 @@ export default class Trips {
         return sortedTrips
     }
 
-    getPastTrips(user,date) {
-       let allTrips = this.getAllTrips(user)
-       return allTrips.filter(trip => {
+    getPastTrips(userTrips,date) {
+    //    let allTrips = this.getAllTrips(user)
+       return userTrips.filter(trip => {
            let today = new Date (date);
            let tripDate = new Date (trip.date)
            return tripDate < today
        })
     }
 
-    getTotalSpent(user, destinations, date) {
-        let allTrips = this.getAllTrips(user)
-        let filteredTripsForYear = allTrips.filter(trip => {
+    getFutureTrips(userTrips,date) {
+        // let userTrips = this.getAllTrips(user)
+        return userTrips.filter(trip => {
+           let today = new Date (date);
+           let tripDate = new Date (trip.date)
+           return tripDate > today
+       })
+    }
+
+    getTotalSpent(userTrips, destinations, date) {
+        let filteredTripsForYear = userTrips.filter(trip => {
             return parseInt(trip.date.split("/")[0]) === parseInt(date.split("/")[0])
         })
         return filteredTripsForYear.reduce((total,data) => {
-            destinations.forEach(destination => {
+            destinations.destinationsData.forEach(destination => {
                 if (data.destinationID === destination.id){
                     let costPerTrip = (data.duration * destination.estimatedLodgingCostPerDay) + 
                         (data.travelers * destination.estimatedFlightCostPerPerson);

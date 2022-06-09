@@ -6,53 +6,67 @@ import './images/turing-logo.png'
 
 import { getData, postData } from "./apiCalls.js";
 import Trips from "../src/Trips.js"
+import Travelers from "../src/Travelers.js"
+import Traveler from "../src/Traveler.js"
+import Destinations from "../src/Destinations.js"
 
 let allTravelersData;
-let singleTravelerData;
 let allTripsData;
 let allDestinationsData;
-let userId = 17;
-let currentDate;
+let userID =19;
+let currentUser;
+let currentDate = "2022/06/09"
 let userTrips;
+let pastUserTrips;
+let futureUserTrips;
 
 const cardDisplay = document.querySelector(".data-display");
+const welcomeDisplay = document.querySelector(".welcome")
+const costDisplay = document.querySelector(".user-info")
+const pastTripsButton = document.querySelector("#past-user-trips");
+const allTripsButton = document.querySelector("#all-trips");
+const futureTripsButton = document.querySelector("#future-user-trips")
+
 
 const createAllData = (data) =>{
-    allTravelersData = data[0].travelers;
-    singleTravelerData = data[1];
+    allTravelersData = new Travelers (data[0].travelers);
+    currentUser = new Traveler(data[1])
     allTripsData = new Trips (data[2].trips);
-    allDestinationsData = data[3].destinations;
-
+    allDestinationsData = new Destinations (data[3].destinations);
+    console.log('allDestinations',allDestinationsData)
     createUserTrips();
+    loadCards(userTrips);
+    updateWelcome();
+    showTotalSpent();
 }
 
 const createUserTrips = () => {
-    userTrips = allTripsData.getAllTrips(singleTravelerData)
-    console.log(userTrips)
+    userTrips = allTripsData.getAllTrips(currentUser)
+    pastUserTrips = allTripsData.getPastTrips(userTrips,currentDate)
+    futureUserTrips = allTripsData.getFutureTrips(userTrips,currentDate)
+    console.log(pastUserTrips)
 }
+
 
 const fetchData = () => {
     Promise.all([
         getData("travelers"),
-        getData("travelers",userId),
+        getData("travelers",userID),
         getData("trips"),
         getData("destinations"),
       ]).then(data => {
-          console.log(data)
         createAllData(data)
-        loadCards()
       })
       .catch((error) =>
       console.log(error, "Error")
     );
 }
 
-const loadCards = () => {
+const loadCards = (trips) => {
     cardDisplay.innerHTML = ''
-    userTrips.forEach(trip => {
-        let foundDestination = allDestinationsData.find(destination => {
-            return destination.id === trip.destinationID
-        })
+    trips.forEach(trip => {
+        //refactor to add to Destinations class
+        let foundDestination = allDestinationsData.findDestinationByTrip(trip);
         cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
             <img src =${foundDestination.image}>
@@ -64,8 +78,41 @@ const loadCards = () => {
     })
 }
 
+const updateWelcome = () => {
+    welcomeDisplay.innerText = `Hi ${currentUser.getFirstName()}`
+}
+
+const showTotalSpent = () => {
+    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}</p>`
+    console.log("user",currentUser)
+    console.log("destinations",currentUser)
+    console.log("date", currentDate)
+}
+
+const loadCardOnClick = (event) => {
+    if (event.target.id === 'past-user-trips'){
+        console.log(event.target.id)
+        loadCards(pastUserTrips)
+    } 
+    if (event.target.id === 'all-trips'){
+        console.log(event.target.id)
+        loadCards(userTrips)
+    } 
+    if (event.target.id === 'future-user-trips'){
+        console.log(event.target.id)
+        loadCards(futureUserTrips)
+    } 
+}
+
 
 window.addEventListener("load", () => {
     fetchData()
-
  });
+
+
+//refactor to add eventListeners with forEach
+ pastTripsButton.addEventListener("click", loadCardOnClick);
+ allTripsButton.addEventListener("click", loadCardOnClick)
+ futureTripsButton.addEventListener("click", loadCardOnClick)
+
+
