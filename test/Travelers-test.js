@@ -12,8 +12,4 @@ describe("Travelers", () => {
     it("should take in travelers data", () => {
         expect(travelers.travelersData).to.deep.equal(travelersData)
     })
-
-    it("should be able to get a random user", () => {
-        expect(travelers.getRandomTraveler()).to.be.a("object")
-    })
 })

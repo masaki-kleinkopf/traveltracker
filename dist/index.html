@@ -11,12 +11,23 @@
   </head>
   <body>
     <aside class="information-bar">
-      <section class="user-form">
-        <label for="date-selection"></label>
-        <input type="date" name="dateSelection" class="date-Selection" id="date-selection" />
-        <form class="postForm" id="postInput" action="index.html" method="post">
-        </form>
-      </section>
+      <form class="user-form">
+        <label for="start">Start Date:</label>
+        <input type="date" name="start" id="start" required>
+        <label for="duration">Number of Days:</label>
+        <input type="number" name="trip-duration" id="trip-duration" minlength="1" min="1" required>
+        <label for="travelers">Number of Travelers:</label>
+        <input type="number" name="travelers" id="travelers" minlength="1" min="1" required>
+        <label for="trip-destination">Destination:</label>
+        <select name="trip-destination" id="trip-destination" required>
+          <option value="" disabled selected></option>
+        </select>
+        <button type="button" name="button" class="button button-quote" id="button-quote">Need a Quote?</button>
+        <p class="hidden" id="trip-cost"></p>
+        <button type="button" name="button" class="button button-submit hidden" id="button-submit">Request Trip</button>
+        <p class="error-message" id="trip-error-message"></p>
+        <p class="hidden" id="trip-request-message"><em>Trip request submitted. You'll hear back from us when it's confirmed!</em></p>
+      </form>
       <section class="user-info">cost</section>
     </aside>
     <aside class="main-section">

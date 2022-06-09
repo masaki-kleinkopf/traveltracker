@@ -13,6 +13,7 @@ import Destinations from "../src/Destinations.js"
 let allTravelersData;
 let allTripsData;
 let allDestinationsData;
+let userID = 45;
 let currentUser;
 let currentDate = "2022/06/09"
 let userTrips;
@@ -21,23 +22,17 @@ const cardDisplay = document.querySelector(".data-display");
 const welcomeDisplay = document.querySelector(".welcome")
 const costDisplay = document.querySelector(".user-info")
 
-const fetchCurrentUser = () => {
-    getData("travelers", allTravelersData.getRandomTraveler().id)
-        .then(data => {
-            currentUser = new Traveler (data)
-            createUserTrips();
-            loadCards();
-            updateWelcome();
-            showTotalSpent();
-        })
-}
 
 const createAllData = (data) =>{
     allTravelersData = new Travelers (data[0].travelers);
-    allTripsData = new Trips (data[1].trips);
-    allDestinationsData = new Destinations (data[2].destinations);
+    currentUser = new Traveler(data[1])
+    allTripsData = new Trips (data[2].trips);
+    allDestinationsData = new Destinations (data[3].destinations);
     console.log('allDestinations',allDestinationsData)
-    fetchCurrentUser()
+    createUserTrips();
+    loadCards();
+    updateWelcome();
+    showTotalSpent();
 }
 
 const createUserTrips = () => {
@@ -49,6 +44,7 @@ const createUserTrips = () => {
 const fetchData = () => {
     Promise.all([
         getData("travelers"),
+        getData("travelers",userID),
         getData("trips"),
         getData("destinations"),
       ]).then(data => {

@@ -108,6 +108,14 @@ ul.navbar li:hover {
   display: none;
 }
 
+input {
+  background-color: aliceblue;
+}
+
+select {
+  background-color: aliceblue;
+}
+
 img {
   height:40%;
   width:80%;
