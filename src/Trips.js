@@ -15,12 +15,21 @@ export default class Trips {
         return sortedTrips
     }
 
-    getPastTrips(user,date) {
-       let allTrips = this.getAllTrips(user)
-       return allTrips.filter(trip => {
+    getPastTrips(userTrips,date) {
+    //    let allTrips = this.getAllTrips(user)
+       return userTrips.filter(trip => {
            let today = new Date (date);
            let tripDate = new Date (trip.date)
            return tripDate < today
+       })
+    }
+
+    getFutureTrips(userTrips,date) {
+        // let userTrips = this.getAllTrips(user)
+        return userTrips.filter(trip => {
+           let today = new Date (date);
+           let tripDate = new Date (trip.date)
+           return tripDate > today
        })
     }
 

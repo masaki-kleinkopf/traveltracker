@@ -13,14 +13,19 @@ import Destinations from "../src/Destinations.js"
 let allTravelersData;
 let allTripsData;
 let allDestinationsData;
-let userID = 45;
+let userID =19;
 let currentUser;
 let currentDate = "2022/06/09"
 let userTrips;
+let pastUserTrips;
+let futureUserTrips;
 
 const cardDisplay = document.querySelector(".data-display");
 const welcomeDisplay = document.querySelector(".welcome")
 const costDisplay = document.querySelector(".user-info")
+const pastTripsButton = document.querySelector("#past-user-trips");
+const allTripsButton = document.querySelector("#all-trips");
+const futureTripsButton = document.querySelector("#future-user-trips")
 
 
 const createAllData = (data) =>{
@@ -30,14 +35,16 @@ const createAllData = (data) =>{
     allDestinationsData = new Destinations (data[3].destinations);
     console.log('allDestinations',allDestinationsData)
     createUserTrips();
-    loadCards();
+    loadCards(userTrips);
     updateWelcome();
     showTotalSpent();
 }
 
 const createUserTrips = () => {
     userTrips = allTripsData.getAllTrips(currentUser)
-    console.log(userTrips)
+    pastUserTrips = allTripsData.getPastTrips(userTrips,currentDate)
+    futureUserTrips = allTripsData.getFutureTrips(userTrips,currentDate)
+    console.log(pastUserTrips)
 }
 
 
@@ -55,9 +62,9 @@ const fetchData = () => {
     );
 }
 
-const loadCards = () => {
+const loadCards = (trips) => {
     cardDisplay.innerHTML = ''
-    userTrips.forEach(trip => {
+    trips.forEach(trip => {
         //refactor to add to Destinations class
         let foundDestination = allDestinationsData.findDestinationByTrip(trip);
         cardDisplay.innerHTML += `
@@ -82,7 +89,30 @@ const showTotalSpent = () => {
     console.log("date", currentDate)
 }
 
+const loadCardOnClick = (event) => {
+    if (event.target.id === 'past-user-trips'){
+        console.log(event.target.id)
+        loadCards(pastUserTrips)
+    } 
+    if (event.target.id === 'all-trips'){
+        console.log(event.target.id)
+        loadCards(userTrips)
+    } 
+    if (event.target.id === 'future-user-trips'){
+        console.log(event.target.id)
+        loadCards(futureUserTrips)
+    } 
+}
+
+
 window.addEventListener("load", () => {
     fetchData()
  });
+
+
+//refactor to add eventListeners with forEach
+ pastTripsButton.addEventListener("click", loadCardOnClick);
+ allTripsButton.addEventListener("click", loadCardOnClick)
+ futureTripsButton.addEventListener("click", loadCardOnClick)
+
 
