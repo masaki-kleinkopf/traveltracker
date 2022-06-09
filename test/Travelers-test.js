@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { tripsData, destinationsData, travelersData } from "./testdata.js"
+import { travelersData } from "./testdata.js"
 import Travelers from "../src/Travelers.js"
 
 describe("Travelers", () => {

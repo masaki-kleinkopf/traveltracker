@@ -7,22 +7,27 @@ import './images/turing-logo.png'
 import { getData, postData } from "./apiCalls.js";
 import Trips from "../src/Trips.js"
 import Travelers from "../src/Travelers.js"
+import Traveler from "../src/Traveler.js"
 
 let allTravelersData;
 let allTripsData;
 let allDestinationsData;
 let currentUser;
-let currentDate;
+let currentDate = "2022/06/09"
 let userTrips;
 
 const cardDisplay = document.querySelector(".data-display");
+const welcomeDisplay = document.querySelector(".welcome")
+const costDisplay = document.querySelector(".user-info")
 
 const fetchCurrentUser = () => {
     getData("travelers", allTravelersData.getRandomTraveler().id)
         .then(data => {
-            currentUser = data
+            currentUser = new Traveler (data)
             createUserTrips();
             loadCards();
+            updateWelcome();
+            showTotalSpent();
         })
 }
 
@@ -71,11 +76,18 @@ const loadCards = () => {
     })
 }
 
-// const updateWelcome = () => {
+const updateWelcome = () => {
+    welcomeDisplay.innerText = `Hi ${currentUser.getFirstName()}`
+}
 
-// }
-
+const showTotalSpent = () => {
+    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}</p>`
+    console.log("user",currentUser)
+    console.log("destinations",currentUser)
+    console.log("date", currentDate)
+}
 
 window.addEventListener("load", () => {
     fetchData()
  });
+

@@ -69,7 +69,8 @@ describe("Trips", () => {
     })
 
     it("should get the total spent for all trips", () => {
-        expect(trips.getTotalSpent(currentUser, destinations, date)).to.equal(5401)
+        let userTrips = trips.getAllTrips(currentUser)
+        expect(trips.getTotalSpent(userTrips, destinations, date)).to.equal(5401)
     })
 
 

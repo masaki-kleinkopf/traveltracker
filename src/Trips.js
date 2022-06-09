@@ -24,9 +24,8 @@ export default class Trips {
        })
     }
 
-    getTotalSpent(user, destinations, date) {
-        let allTrips = this.getAllTrips(user)
-        let filteredTripsForYear = allTrips.filter(trip => {
+    getTotalSpent(userTrips, destinations, date) {
+        let filteredTripsForYear = userTrips.filter(trip => {
             return parseInt(trip.date.split("/")[0]) === parseInt(date.split("/")[0])
         })
         return filteredTripsForYear.reduce((total,data) => {
