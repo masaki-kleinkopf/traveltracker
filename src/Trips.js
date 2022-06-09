@@ -29,7 +29,7 @@ export default class Trips {
             return parseInt(trip.date.split("/")[0]) === parseInt(date.split("/")[0])
         })
         return filteredTripsForYear.reduce((total,data) => {
-            destinations.forEach(destination => {
+            destinations.destinationsData.forEach(destination => {
                 if (data.destinationID === destination.id){
                     let costPerTrip = (data.duration * destination.estimatedLodgingCostPerDay) + 
                         (data.travelers * destination.estimatedFlightCostPerPerson);

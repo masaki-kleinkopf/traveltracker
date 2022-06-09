@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { tripsData, destinationsData } from "./testdata.js"
 import Trips from "../src/Trips.js"
+import Destinations from "../src/Destinations.js"
 
 
 describe("Trips", () => {
@@ -11,7 +12,7 @@ describe("Trips", () => {
 
     beforeEach(() => {
         trips = new Trips (tripsData);
-        destinations = destinationsData;
+        destinations = new Destinations (destinationsData);
         currentUser = {id: 1, name: 'Ham Leadbeater', travelerType: 'relaxer'}
         date = "2022/06/08"
     })

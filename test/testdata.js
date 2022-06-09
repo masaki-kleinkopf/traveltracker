@@ -94,4 +94,5 @@ const destinationsData = [
         }
     ]
 
+   
     export {tripsData, destinationsData, travelersData}

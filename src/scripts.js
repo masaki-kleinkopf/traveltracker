@@ -8,6 +8,7 @@ import { getData, postData } from "./apiCalls.js";
 import Trips from "../src/Trips.js"
 import Travelers from "../src/Travelers.js"
 import Traveler from "../src/Traveler.js"
+import Destinations from "../src/Destinations.js"
 
 let allTravelersData;
 let allTripsData;
@@ -34,7 +35,8 @@ const fetchCurrentUser = () => {
 const createAllData = (data) =>{
     allTravelersData = new Travelers (data[0].travelers);
     allTripsData = new Trips (data[1].trips);
-    allDestinationsData = data[2].destinations;
+    allDestinationsData = new Destinations (data[2].destinations);
+    console.log('allDestinations',allDestinationsData)
     fetchCurrentUser()
 }
 
@@ -42,7 +44,6 @@ const createUserTrips = () => {
     userTrips = allTripsData.getAllTrips(currentUser)
     console.log(userTrips)
 }
-
 
 
 const fetchData = () => {
@@ -62,9 +63,7 @@ const loadCards = () => {
     cardDisplay.innerHTML = ''
     userTrips.forEach(trip => {
         //refactor to add to Destinations class
-        let foundDestination = allDestinationsData.find(destination => {
-            return destination.id === trip.destinationID
-        })
+        let foundDestination = allDestinationsData.findDestinationByTrip(trip);
         cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
             <img src =${foundDestination.image}>
