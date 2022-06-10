@@ -13,7 +13,7 @@ import Destinations from "../src/Destinations.js"
 let allTravelersData;
 let allTripsData;
 let allDestinationsData;
-let userID = 22;
+let userID = 18;
 let currentUser;
 let currentDate = "2022/06/09"
 let userTrips;
@@ -111,7 +111,7 @@ const loadCards = (trips) => {
         if (trip.status === 'approved'){
             cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
-            <img src =${foundDestination.image}>
+            <img src =${foundDestination.image} alt= ${foundDestination.alt}>
             destination: ${foundDestination.destination}<br><br>
             travelers: ${trip.travelers}<br><br>
             date: ${trip.date}
@@ -120,7 +120,7 @@ const loadCards = (trips) => {
         } else {
             cardDisplay.innerHTML += `
         <div class="widget pending" id="${trip.id}"> 
-            <img src =${foundDestination.image}>
+            <img src =${foundDestination.image} alt=${foundDestination.alt}>
             destination: ${foundDestination.destination}<br><br>
             travelers: ${trip.travelers}<br><br>
             date: ${trip.date}<br><br>
