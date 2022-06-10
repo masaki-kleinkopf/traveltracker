@@ -158,6 +158,7 @@ const loadCardOnClick = (event) => {
 }
 
 const displayQuote = () => {
+    console.log(destinationInput[destinationInput.selectedIndex].id)
     displayTripCost.innerText = `Your quoted price: 
         ${allDestinationsData.findCost(parseInt(durationInput.value),parseInt(travelersInput.value),parseInt(destinationInput[destinationInput.selectedIndex].id))}$`
         displayTripCost.classList.remove("hidden")
@@ -182,10 +183,9 @@ window.addEventListener("load", () => {
  allTripsButton.addEventListener("click", loadCardOnClick)
  futureTripsButton.addEventListener("click", loadCardOnClick)
  pendingTrips.addEventListener("click",loadCardOnClick)
-
  submitButton.addEventListener("click",createTripRequestInfo)
  quoteButton.addEventListener("click",displayQuote)
-
+ //just clear the form?
  startInput.addEventListener("change",updateDestinationInput)
 
 

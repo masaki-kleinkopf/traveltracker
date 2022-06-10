@@ -11,7 +11,7 @@ export default class Destinations {
 
     findCost(duration, numTravelers, id) {
         let foundDestination = this.destinationsData.find(destination => {
-            return id === id;
+            return destination.id === id;
         })
         let costPerTrip = (duration * foundDestination.estimatedLodgingCostPerDay) + 
              (numTravelers * foundDestination.estimatedFlightCostPerPerson)
