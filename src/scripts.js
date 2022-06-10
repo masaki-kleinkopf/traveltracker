@@ -13,7 +13,7 @@ import Destinations from "../src/Destinations.js"
 let allTravelersData;
 let allTripsData;
 let allDestinationsData;
-let userID =19;
+let userID = 22;
 let currentUser;
 let currentDate = "2022/06/09"
 let userTrips;
@@ -31,6 +31,7 @@ const futureTripsButton = document.querySelector("#future-user-trips")
 const createAllData = (data) =>{
     allTravelersData = new Travelers (data[0].travelers);
     currentUser = new Traveler(data[1])
+    console.log(currentUser)
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
     console.log('allDestinations',allDestinationsData)
@@ -103,6 +104,11 @@ const loadCardOnClick = (event) => {
         loadCards(futureUserTrips)
     } 
 }
+
+// const tripRequestInfo = {
+//     id: Date.now(),
+//     userID:currentUser.id
+// }
 
 
 window.addEventListener("load", () => {

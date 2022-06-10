@@ -2,7 +2,7 @@ export default class Traveler {
     constructor(traveler) {
         this.id = traveler.id;
         this.name = traveler.name;
-        this.type = traveler.type;
+        this.travelerType = traveler.travelerType;
     }
     getFirstName() {
         return this.name.split(' ')[0]
