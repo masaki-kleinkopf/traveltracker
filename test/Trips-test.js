@@ -30,7 +30,7 @@ describe("Trips", () => {
                 "travelers": 1,
                 "date": "2021/09/16",
                 "duration": 8,
-                "status": "approved",
+                "status": "pending",
                 "suggestedActivities": []
                 },
                 {
@@ -65,7 +65,7 @@ describe("Trips", () => {
             "travelers": 1,
             "date": "2021/09/16",
             "duration": 8,
-            "status": "approved",
+            "status": "pending",
             "suggestedActivities": []
             }])
     })
@@ -94,6 +94,19 @@ describe("Trips", () => {
             }])
     })
 
+    it("should get filter for pending status", () => {
+        let userTrips = trips.getAllTrips(currentUser)
+        expect(trips.getPendingTrips(userTrips)).to.deep.equal([{
+            "id": 1,
+            "userID": 1,
+            "destinationID": 1,
+            "travelers": 1,
+            "date": "2021/09/16",
+            "duration": 8,
+            "status": "pending",
+            "suggestedActivities": []
+            }])
+    })
     it("should get the total spent for all trips", () => {
         let userTrips = trips.getAllTrips(currentUser)
         expect(trips.getTotalSpent(userTrips, destinations, date)).to.equal(5401)

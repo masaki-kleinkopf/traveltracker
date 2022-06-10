@@ -33,6 +33,17 @@ export default class Trips {
        })
     }
 
+    getPendingTrips(userTrips){
+        let pendingTrips = userTrips.filter(trip => {
+           return trip.status === "pending"
+        })
+        if (!pendingTrips) {
+            return false;
+        } else {
+            return pendingTrips;
+        }
+    }
+
     getTotalSpent(userTrips, destinations, date) {
         let filteredTripsForYear = userTrips.filter(trip => {
             return parseInt(trip.date.split("/")[0]) === parseInt(date.split("/")[0])

@@ -19,6 +19,7 @@ let currentDate = "2022/06/09"
 let userTrips;
 let pastUserTrips;
 let futureUserTrips;
+let pendingUserTrips;
 let tripRequestInfo;
 
 
@@ -28,21 +29,21 @@ const costDisplay = document.querySelector(".user-info")
 const pastTripsButton = document.querySelector("#past-user-trips");
 const allTripsButton = document.querySelector("#all-trips");
 const futureTripsButton = document.querySelector("#future-user-trips");
-const submitButton = document.querySelector("#submit-button")
+const pendingTrips = document.querySelector("#pending-trips")
+const submitButton = document.querySelector("#submit-button");
+const quoteButton = document.querySelector("#quote-button")
 const startInput = document.querySelector("#start");
 const durationInput = document.querySelector("#trip-duration");
 const destinationInput = document.querySelector("#trip-destination");
 const travelersInput = document.querySelector("#travelers");
+const displayTripCost = document.querySelector("#trip-cost");
 
 
 const createAllData = (data) =>{
     allTravelersData = new Travelers (data[0].travelers);
-    currentUser = new Traveler(data[1])
-    console.log(currentUser)
+    currentUser = new Traveler(data[1]);
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
-    console.log(allDestinationsData)
-    console.log('allDestinations',allDestinationsData)
     createUserTrips();
     loadCards(userTrips);
     updateWelcome();
@@ -52,10 +53,10 @@ const createAllData = (data) =>{
 }
 
 const createUserTrips = () => {
-    userTrips = allTripsData.getAllTrips(currentUser)
-    pastUserTrips = allTripsData.getPastTrips(userTrips,currentDate)
-    futureUserTrips = allTripsData.getFutureTrips(userTrips,currentDate)
-    console.log(pastUserTrips)
+    userTrips = allTripsData.getAllTrips(currentUser);
+    pastUserTrips = allTripsData.getPastTrips(userTrips,currentDate);
+    futureUserTrips = allTripsData.getFutureTrips(userTrips,currentDate);
+    pendingUserTrips = allTripsData.getPendingTrips(userTrips)
 }
 
 
@@ -73,6 +74,8 @@ const fetchData = () => {
     );
 }
 
+
+// this isn't grabbing updated destination
 const createTripRequestInfo = () => {
     
     tripRequestInfo ={
@@ -90,11 +93,14 @@ const createTripRequestInfo = () => {
     postNewTrip()
 }
 
+const updateDestinationInput = () => {
+    tripRequestInfo.destinationID = parseInt(destinationInput[destinationInput.selectedIndex].id)
+}
+
 const postNewTrip = () => {
     postData('trips',tripRequestInfo).then((data) => {
         fetchData()
-    }
-    )
+    });
 }
 
 const loadCards = (trips) => {
@@ -102,7 +108,8 @@ const loadCards = (trips) => {
     trips.forEach(trip => {
         //refactor to add to Destinations class
         let foundDestination = allDestinationsData.findDestinationByTrip(trip);
-        cardDisplay.innerHTML += `
+        if (trip.status === 'approved'){
+            cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
             <img src =${foundDestination.image}>
             destination: ${foundDestination.destination}<br><br>
@@ -110,6 +117,17 @@ const loadCards = (trips) => {
             date: ${trip.date}
         </div>
         `
+        } else {
+            cardDisplay.innerHTML += `
+        <div class="widget pending" id="${trip.id}"> 
+            <img src =${foundDestination.image}>
+            destination: ${foundDestination.destination}<br><br>
+            travelers: ${trip.travelers}<br><br>
+            date: ${trip.date}<br><br>
+            PENDING
+        </div>
+        `
+        }
     })
 }
 
@@ -119,11 +137,8 @@ const updateWelcome = () => {
 
 const showTotalSpent = () => {
     costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}</p>`
-    console.log("user",currentUser)
-    console.log("destinations",currentUser)
-    console.log("date", currentDate)
 }
-
+//refactor
 const loadCardOnClick = (event) => {
     if (event.target.id === 'past-user-trips'){
         console.log(event.target.id)
@@ -137,8 +152,16 @@ const loadCardOnClick = (event) => {
         console.log(event.target.id)
         loadCards(futureUserTrips)
     } 
+    if (event.target.id === 'pending-trips'){
+        loadCards(pendingUserTrips)
+    }
 }
 
+const displayQuote = () => {
+    displayTripCost.innerText = `Your quoted price: 
+        ${allDestinationsData.findCost(parseInt(durationInput.value),parseInt(travelersInput.value),parseInt(destinationInput[destinationInput.selectedIndex].id))}$`
+        displayTripCost.classList.remove("hidden")
+}
 
 
 const addDestinationOptions = () => {
@@ -158,7 +181,11 @@ window.addEventListener("load", () => {
  pastTripsButton.addEventListener("click", loadCardOnClick);
  allTripsButton.addEventListener("click", loadCardOnClick)
  futureTripsButton.addEventListener("click", loadCardOnClick)
+ pendingTrips.addEventListener("click",loadCardOnClick)
 
  submitButton.addEventListener("click",createTripRequestInfo)
+ quoteButton.addEventListener("click",displayQuote)
+
+ startInput.addEventListener("change",updateDestinationInput)
 
 

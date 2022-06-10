@@ -108,6 +108,10 @@ ul.navbar li:hover {
   display: none;
 }
 
+.pending {
+  color: orange
+}
+
 input {
   background-color: aliceblue;
 }
