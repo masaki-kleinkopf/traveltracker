@@ -1,5 +1,5 @@
 :root {
-  --main-font-color:#005377;
+  --main-font-color:rgb(73, 120, 29);
 }
 
 /* * {
@@ -49,6 +49,7 @@ ul.navbar li:hover {
   justify-content: space-between;
   align-items: center;
   text-align: center;
+  color:black;
 }
 
 .user-info {
@@ -102,15 +103,15 @@ ul.navbar li:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color:black;
+  font-weight:200
 }
 
 .hidden {
   display: none;
 }
 
-.pending {
-  color: orange
-}
+
 
 input {
   background-color: aliceblue;
