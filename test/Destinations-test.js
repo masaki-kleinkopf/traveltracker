@@ -35,4 +35,6 @@ describe("Travelers", () => {
 
         expect(destinations.findDestinationByTrip(trip)).to.deep.equal(expectedFoundTrip)
     })
+
+    
 })

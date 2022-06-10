@@ -19,13 +19,20 @@ let currentDate = "2022/06/09"
 let userTrips;
 let pastUserTrips;
 let futureUserTrips;
+let tripRequestInfo;
+
 
 const cardDisplay = document.querySelector(".data-display");
 const welcomeDisplay = document.querySelector(".welcome")
 const costDisplay = document.querySelector(".user-info")
 const pastTripsButton = document.querySelector("#past-user-trips");
 const allTripsButton = document.querySelector("#all-trips");
-const futureTripsButton = document.querySelector("#future-user-trips")
+const futureTripsButton = document.querySelector("#future-user-trips");
+const submitButton = document.querySelector("#submit-button")
+const startInput = document.querySelector("#start");
+const durationInput = document.querySelector("#trip-duration");
+const destinationInput = document.querySelector("#trip-destination");
+const travelersInput = document.querySelector("#travelers");
 
 
 const createAllData = (data) =>{
@@ -34,11 +41,14 @@ const createAllData = (data) =>{
     console.log(currentUser)
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
+    console.log(allDestinationsData)
     console.log('allDestinations',allDestinationsData)
     createUserTrips();
     loadCards(userTrips);
     updateWelcome();
     showTotalSpent();
+    addDestinationOptions();
+    // createTripRequestInfo();
 }
 
 const createUserTrips = () => {
@@ -61,6 +71,30 @@ const fetchData = () => {
       .catch((error) =>
       console.log(error, "Error")
     );
+}
+
+const createTripRequestInfo = () => {
+    
+    tripRequestInfo ={
+        //refactor id
+        id: Date.now(),
+        userID: currentUser.id,
+        destinationID: parseInt(destinationInput[destinationInput.selectedIndex].id),
+        travelers: parseInt(travelersInput.value),
+        date:startInput.value.split("-").join("/"),
+        duration: parseInt(durationInput.value),
+        status:'pending',
+        suggestedActivities:[]
+    };
+    console.log('postinfo',tripRequestInfo)
+    postNewTrip()
+}
+
+const postNewTrip = () => {
+    postData('trips',tripRequestInfo).then((data) => {
+        fetchData()
+    }
+    )
 }
 
 const loadCards = (trips) => {
@@ -105,10 +139,14 @@ const loadCardOnClick = (event) => {
     } 
 }
 
-// const tripRequestInfo = {
-//     id: Date.now(),
-//     userID:currentUser.id
-// }
+
+
+const addDestinationOptions = () => {
+    allDestinationsData.destinationsData.forEach(destination => {
+        destinationInput.innerHTML += `
+        <option value '${destination.destination}' id=${destination.id}>${destination.destination}</option>`
+    })
+}
 
 
 window.addEventListener("load", () => {
@@ -120,5 +158,7 @@ window.addEventListener("load", () => {
  pastTripsButton.addEventListener("click", loadCardOnClick);
  allTripsButton.addEventListener("click", loadCardOnClick)
  futureTripsButton.addEventListener("click", loadCardOnClick)
+
+ submitButton.addEventListener("click",createTripRequestInfo)
 
 
