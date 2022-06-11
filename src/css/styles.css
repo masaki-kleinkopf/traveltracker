@@ -1,11 +1,11 @@
 :root {
-  --main-font-color: rgb(73, 120, 29);
+  --main-font-color:#005377;
 }
 
-* {
+/* * {
   border: 1px solid;
   border-color: yellow;
-}
+} */
 
 body {
   background-color: white;
@@ -29,7 +29,7 @@ ul.navbar li {
 }
 
 ul.navbar li:hover {
-  color: orange;
+  color: #f1a208;
   cursor: pointer;
 }
 
@@ -41,7 +41,7 @@ ul.navbar li:hover {
 }
 
 .information-bar {
-  border: solid 1px var(--main-font-color);
+  /* border: solid 1px var(--main-font-color); */
   display: flex;
   height: 100vh;
   width: 20%;
@@ -52,7 +52,7 @@ ul.navbar li:hover {
 }
 
 .user-info {
-  border: solid 1px orange;
+  /* border: solid 1px orange; */
   font-size: 0.75em;
   height: 25%;
   width: 100%;
@@ -73,7 +73,7 @@ ul.navbar li:hover {
 }
 
 .main-section {
-  border: solid 1px orange;
+  /* border: solid 1px orange; */
   height: 100vh;
   width: 80%;
   display: flex;
@@ -81,7 +81,7 @@ ul.navbar li:hover {
 }
 
 .title-bar {
-  border: solid 1px orange;
+  /* border: solid 1px orange; */
   height: 25vh;
 }
 
@@ -108,6 +108,10 @@ ul.navbar li:hover {
   display: none;
 }
 
+.pending {
+  color: orange
+}
+
 input {
   background-color: aliceblue;
 }
@@ -117,6 +121,9 @@ select {
 }
 
 img {
-  height:40%;
-  width:80%;
+  height:100%;
+  width:100%;
+  border-radius: 30px;
+  padding: 10px;;
 }
+

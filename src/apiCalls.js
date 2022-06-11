@@ -13,14 +13,15 @@ const getData = (api,id) => {
 const postData = (apiName,data) => {
     const postDetails = {
         method: 'POST',
+        body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        }
       }
     let endpoint = `http://localhost:3001/api/v1/${apiName}`
     return fetch(endpoint, postDetails)
       .then(response => {
+        console.log(response)
         if (!response.ok) {
           console.log('Sorry! Something went wrong')
         }

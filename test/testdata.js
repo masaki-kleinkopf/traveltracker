@@ -6,7 +6,7 @@ const tripsData = [
         "travelers": 1,
         "date": "2021/09/16",
         "duration": 8,
-        "status": "approved",
+        "status": "pending",
         "suggestedActivities": []
         },
         {

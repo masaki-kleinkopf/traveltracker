@@ -15,6 +15,18 @@ describe("Travelers", () => {
         expect(traveler).to.be.an.instanceOf(Traveler)
     })
 
+    it('should take in an id', () => {
+        expect(traveler.id).to.equal(1)
+    })
+
+    it('shouldt take in a name', () => {
+        expect(traveler.name).to.equal('Ham Leadbeater')
+    })
+
+    it('shouldt take in a traveler type', () => {
+        expect(traveler.travelerType).to.equal('relaxer')
+    })
+
     it('should return a first name', () => {
         expect(traveler.getFirstName()).to.equal('Ham')
         expect(traveler2.getFirstName()).to.equal('Rachael')
