@@ -49,7 +49,6 @@ const createAllData = (data) =>{
     updateWelcome();
     showTotalSpent();
     addDestinationOptions();
-    // createTripRequestInfo();
 }
 
 const createUserTrips = () => {
