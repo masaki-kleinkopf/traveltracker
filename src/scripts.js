@@ -37,7 +37,13 @@ const durationInput = document.querySelector("#trip-duration");
 const destinationInput = document.querySelector("#trip-destination");
 const travelersInput = document.querySelector("#travelers");
 const displayTripCost = document.querySelector("#trip-cost");
-const form = document.querySelector(".user-form")
+const form = document.querySelector(".user-form");
+const usernameInput = document.querySelector("#username-input");
+const passwordInput = document.querySelector("#password-input");
+const loginButton = document.querySelector("#login-submit");
+const mainDisplay = document.querySelector(".main-display");
+const signIn = document.querySelector(".sign-in-container")
+const logInErrorMessage = document.querySelector("#login-error-message")
 
 
 const createAllData = (data) =>{
@@ -169,10 +175,30 @@ const addDestinationOptions = () => {
     })
 }
 
+const evaluateLogin = (event) => {
+    event.preventDefault()
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+    const splitUsername = username.split('');
+    const usernameWord = splitUsername.slice(0,8).join('');
+    const usernameNumber = splitUsername.slice(8,10).join('');
+    if (usernameWord === "traveler" && password === "traveler"){
+        signIn.classList.add("hidden");
+        mainDisplay.classList.remove("hidden");
+        userID = parseInt(usernameNumber);
+        fetchData();
+    } else {
+        console.log(usernameWord)
+        console.log(usernameNumber)
+        logInErrorMessage.classList.remove("hidden")
+    }
+    
+}
 
-window.addEventListener("load", () => {
-    fetchData()
- });
+
+// window.addEventListener("load", () => {
+//     fetchData()
+//  });
 
 
 //refactor to add eventListeners with forEach
@@ -182,6 +208,7 @@ window.addEventListener("load", () => {
  pendingTrips.addEventListener("click",loadCardOnClick)
  submitButton.addEventListener("click",createTripRequestInfo)
  quoteButton.addEventListener("click",displayQuote)
+ loginButton.addEventListener("click", evaluateLogin)
 
 
 
