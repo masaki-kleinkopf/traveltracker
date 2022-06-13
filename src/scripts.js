@@ -37,6 +37,7 @@ const durationInput = document.querySelector("#trip-duration");
 const destinationInput = document.querySelector("#trip-destination");
 const travelersInput = document.querySelector("#travelers");
 const displayTripCost = document.querySelector("#trip-cost");
+const form = document.querySelector(".user-form")
 
 
 const createAllData = (data) =>{
@@ -49,7 +50,6 @@ const createAllData = (data) =>{
     updateWelcome();
     showTotalSpent();
     addDestinationOptions();
-    // createTripRequestInfo();
 }
 
 const createUserTrips = () => {
@@ -90,12 +90,10 @@ const createTripRequestInfo = () => {
         suggestedActivities:[]
     };
     console.log('postinfo',tripRequestInfo)
+    form.reset()
     postNewTrip()
 }
 
-const updateDestinationInput = () => {
-    tripRequestInfo.destinationID = parseInt(destinationInput[destinationInput.selectedIndex].id)
-}
 
 const postNewTrip = () => {
     postData('trips',tripRequestInfo).then((data) => {
@@ -106,7 +104,6 @@ const postNewTrip = () => {
 const loadCards = (trips) => {
     cardDisplay.innerHTML = ''
     trips.forEach(trip => {
-        //refactor to add to Destinations class
         let foundDestination = allDestinationsData.findDestinationByTrip(trip);
         if (trip.status === 'approved'){
             cardDisplay.innerHTML += `
@@ -158,9 +155,10 @@ const loadCardOnClick = (event) => {
 }
 
 const displayQuote = () => {
+    console.log(destinationInput[destinationInput.selectedIndex].id)
     displayTripCost.innerText = `Your quoted price: 
-        ${allDestinationsData.findCost(parseInt(durationInput.value),parseInt(travelersInput.value),parseInt(destinationInput[destinationInput.selectedIndex].id))}$`
-        displayTripCost.classList.remove("hidden")
+        ${allDestinationsData.findCost(parseInt(durationInput.value),parseInt(travelersInput.value),parseInt(destinationInput[destinationInput.selectedIndex].id))}$`;
+        displayTripCost.classList.remove("hidden");
 }
 
 
@@ -182,10 +180,9 @@ window.addEventListener("load", () => {
  allTripsButton.addEventListener("click", loadCardOnClick)
  futureTripsButton.addEventListener("click", loadCardOnClick)
  pendingTrips.addEventListener("click",loadCardOnClick)
-
  submitButton.addEventListener("click",createTripRequestInfo)
  quoteButton.addEventListener("click",displayQuote)
 
- startInput.addEventListener("change",updateDestinationInput)
+
 
 
