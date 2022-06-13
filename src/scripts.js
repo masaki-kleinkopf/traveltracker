@@ -13,7 +13,7 @@ import Destinations from "../src/Destinations.js"
 let allTravelersData;
 let allTripsData;
 let allDestinationsData;
-let userID = 18;
+let userID;
 let currentUser;
 let currentDate = "2022/06/09"
 let userTrips;
@@ -26,10 +26,6 @@ let tripRequestInfo;
 const cardDisplay = document.querySelector(".data-display");
 const welcomeDisplay = document.querySelector(".welcome")
 const costDisplay = document.querySelector(".user-info")
-const pastTripsButton = document.querySelector("#past-user-trips");
-const allTripsButton = document.querySelector("#all-trips");
-const futureTripsButton = document.querySelector("#future-user-trips");
-const pendingTrips = document.querySelector("#pending-trips")
 const submitButton = document.querySelector("#submit-button");
 const quoteButton = document.querySelector("#quote-button")
 const startInput = document.querySelector("#start");
@@ -37,11 +33,19 @@ const durationInput = document.querySelector("#trip-duration");
 const destinationInput = document.querySelector("#trip-destination");
 const travelersInput = document.querySelector("#travelers");
 const displayTripCost = document.querySelector("#trip-cost");
-const form = document.querySelector(".user-form")
+const form = document.querySelector(".user-form");
+const usernameInput = document.querySelector("#username-input");
+const passwordInput = document.querySelector("#password-input");
+const loginButton = document.querySelector("#login-submit");
+const mainDisplay = document.querySelector(".main-display");
+const signIn = document.querySelector(".sign-in-container");
+const logInErrorMessage = document.querySelector("#login-error-message");
+const displayButtons = Array.from(document.querySelectorAll(".display-button"))
 
 
 const createAllData = (data) =>{
     allTravelersData = new Travelers (data[0].travelers);
+    console.log(allTravelersData)
     currentUser = new Traveler(data[1]);
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
@@ -75,11 +79,9 @@ const fetchData = () => {
 }
 
 
-// this isn't grabbing updated destination
 const createTripRequestInfo = () => {
     
     tripRequestInfo ={
-        //refactor id
         id: Date.now(),
         userID: currentUser.id,
         destinationID: parseInt(destinationInput[destinationInput.selectedIndex].id),
@@ -156,8 +158,11 @@ const loadCardOnClick = (event) => {
 
 const displayQuote = () => {
     console.log(destinationInput[destinationInput.selectedIndex].id)
+    const duration = parseInt(durationInput.value);
+    const numTravelers = parseInt(travelersInput.value);
+    const destinationId = parseInt(destinationInput[destinationInput.selectedIndex].id);
     displayTripCost.innerText = `Your quoted price: 
-        ${allDestinationsData.findCost(parseInt(durationInput.value),parseInt(travelersInput.value),parseInt(destinationInput[destinationInput.selectedIndex].id))}$`;
+        ${allDestinationsData.findCost(duration,numTravelers,destinationId)}$`;
         displayTripCost.classList.remove("hidden");
 }
 
@@ -169,19 +174,39 @@ const addDestinationOptions = () => {
     })
 }
 
+const evaluateLogin = (event) => {
+    event.preventDefault()
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+    const splitUsername = username.split('');
+    const usernameWord = splitUsername.slice(0,8).join('');
+    const usernameNumber = parseInt(splitUsername.slice(8,10).join(''));
+    if (usernameWord === "traveler" && password === "traveler" && typeof usernameNumber === "number" && usernameNumber > 0 && usernameNumber < 51){
+        signIn.classList.add("hidden");
+        mainDisplay.classList.remove("hidden");
+        userID = parseInt(usernameNumber);
+        fetchData();
+    } else {
+        console.log(usernameWord)
+        console.log(usernameNumber)
+        logInErrorMessage.classList.remove("hidden")
+    }
+    
+}
 
-window.addEventListener("load", () => {
-    fetchData()
- });
+
+// window.addEventListener("load", () => {
+//     fetchData()
+//  });
 
 
 //refactor to add eventListeners with forEach
- pastTripsButton.addEventListener("click", loadCardOnClick);
- allTripsButton.addEventListener("click", loadCardOnClick)
- futureTripsButton.addEventListener("click", loadCardOnClick)
- pendingTrips.addEventListener("click",loadCardOnClick)
+displayButtons.forEach(button => {
+    button.addEventListener("click", loadCardOnClick)
+})
  submitButton.addEventListener("click",createTripRequestInfo)
  quoteButton.addEventListener("click",displayQuote)
+ loginButton.addEventListener("click", evaluateLogin)
 
 
 

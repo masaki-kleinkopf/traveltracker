@@ -10,86 +10,103 @@
     <title>Travel Tracker</title>
   </head>
   <body>
-    <aside class="information-bar">
-      <form class="user-form">
-        <label for="start">Start Date:</label>
-        <input type="date" name="start" id="start" required>
-        <label for="trip-duration">Number of Days:</label>
-        <input type="number" name="trip-duration" id="trip-duration" minlength="1" min="1" required>
-        <label for="travelers">Number of Travelers:</label>
-        <input type="number" name="travelers" id="travelers" minlength="1" min="1" required>
-        <label for="trip-destination">Destination:</label>
-        <select name="trip-destination" id="trip-destination" required>
-          <option value="" disabled selected></option>
-        </select>
-        <button type="button" name="button" class="button quote" id="quote-button">Need a Quote?</button>
-        <p class="hidden" id="trip-cost"></p>
-        <button type="button" name="button" class="button submit" id="submit-button">Request Trip</button>
-        <p class="error-message" id="trip-error-message"></p>
-        <p class="hidden" id="trip-request-message"><em>Trip request submitted. You'll hear back from us when it's confirmed!</em></p>
-      </form>
-      <section class="user-info">cost</section>
-    </aside>
-    <aside class="main-section">
-      <section class="title-bar">
-        <h1 class="welcome">welcome</h1>
-        <ul class="navbar">
-          <li
-            class="dataButton"
-            id="all-trips"
-            data-target="all-trips""
-            role="button"
-            aria-pressed="false"
-            tabindex="0"
-          >
-            all trips
-          </li>
-          <li
-            class="dataButton"
-            id="past-user-trips"
-            data-target="past-user-trips""
-            role="button"
-            aria-pressed="false"
-            tabindex="0"
-          >
-            past trips
-          </li>
-          <li
-            class="dataButton"
-            id="present-trips"
-            data-target="present-trips""
-            role="button"
-            aria-pressed="false"
-            tabindex="0"
-          >
-            present trips
-          </li>
-          <li
-            class="dataButton"
-            id="future-user-trips"
-            data-target="future-user-trips"
-            role="button"
-            aria-pressed="false"
-            tabindex="0"
-          >
-            upcoming trips
-          </li>
-          <li
-            class="dataButton"
-            id="pending-trips"
-            data-target="pending-trips""
-            role="button"
-            aria-pressed="false"
-            tabindex="0"
-          >
-            pending trips
-          </li>
-        </ul>
-      </section>
-      <section class="data-display">
-        <div class="widget" id="placeholder"></div>
-      </section>
-    </aside>
-    <script src="bundle.js"></script>
+    <header class>
+      <h1>travel tracker</h1>
+      <div class="sign-in-container">
+        <form class="sign-in-form">
+          <label for="username-input" class="login">Username</label>
+          <input type="text" name="username" class="login-form" id="username-input" placeholder="Username" required>
+          <label for="password-input" class="login">Password</label>
+          <input type="password" name="password" class="login-form" id="password-input" placeholder="Password" required>
+          <label for="login-submit" class="login">Submit</label>
+          <input type="submit" value="Sign In" class="button" id="login-submit">
+        </form>
+        <p class="error-message hidden" id="login-error-message">try again</p>
+      </div>
+      <h2 class="hidden" id="welcome-text"></h2>
+    </header>
+    <main class="hidden main-display">
+      <aside class="information-bar">
+        <form class="user-form">
+          <label for="start">Start Date:</label>
+          <input type="date" name="start" id="start" required>
+          <label for="trip-duration">Number of Days:</label>
+          <input type="number" name="trip-duration" id="trip-duration" minlength="1" min="1" required>
+          <label for="travelers">Number of Travelers:</label>
+          <input type="number" name="travelers" id="travelers" minlength="1" min="1" required>
+          <label for="trip-destination">Destination:</label>
+          <select name="trip-destination" id="trip-destination" required>
+            <option value="" disabled selected></option>
+          </select>
+          <button type="button" name="button" class="button quote" id="quote-button">Need a Quote?</button>
+          <p class="hidden" id="trip-cost"></p>
+          <button type="button" name="button" class="button submit" id="submit-button">Request Trip</button>
+          <p class="error-message" id="trip-error-message"></p>
+          <p class="hidden" id="trip-request-message"><em>Trip request submitted. You'll hear back from us when it's confirmed!</em></p>
+        </form>
+        <section class="user-info">cost</section>
+      </aside>
+      <aside class="main-section">
+        <section class="title-bar">
+          <h1 class="welcome">welcome</h1>
+          <ul class="navbar">
+            <li
+              class="display-button"
+              id="all-trips"
+              data-target="all-trips""
+              role="button"
+              aria-pressed="false"
+              tabindex="0"
+            >
+              all trips
+            </li>
+            <li
+              class="display-button"
+              id="past-user-trips"
+              data-target="past-user-trips""
+              role="button"
+              aria-pressed="false"
+              tabindex="0"
+            >
+              past trips
+            </li>
+            <li
+              class="display-button"
+              id="present-trips"
+              data-target="present-trips""
+              role="button"
+              aria-pressed="false"
+              tabindex="0"
+            >
+              present trips
+            </li>
+            <li
+              class="display-button"
+              id="future-user-trips"
+              data-target="future-user-trips"
+              role="button"
+              aria-pressed="false"
+              tabindex="0"
+            >
+              upcoming trips
+            </li>
+            <li
+              class="display-button"
+              id="pending-trips"
+              data-target="pending-trips""
+              role="button"
+              aria-pressed="false"
+              tabindex="0"
+            >
+              pending trips
+            </li>
+          </ul>
+        </section>
+        <section class="data-display">
+          <div class="widget" id="placeholder"></div>
+        </section>
+      </aside>
+    </main>
+  <script src="bundle.js"></script>
   </body>
 </html>
