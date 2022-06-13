@@ -13,7 +13,7 @@ import Destinations from "../src/Destinations.js"
 let allTravelersData;
 let allTripsData;
 let allDestinationsData;
-let userID = 18;
+let userID;
 let currentUser;
 let currentDate = "2022/06/09"
 let userTrips;
@@ -81,7 +81,6 @@ const fetchData = () => {
 }
 
 
-// this isn't grabbing updated destination
 const createTripRequestInfo = () => {
     
     tripRequestInfo ={
@@ -162,8 +161,11 @@ const loadCardOnClick = (event) => {
 
 const displayQuote = () => {
     console.log(destinationInput[destinationInput.selectedIndex].id)
+    const duration = parseInt(durationInput.value);
+    const numTravelers = parseInt(travelersInput.value);
+    const destinationId = parseInt(destinationInput[destinationInput.selectedIndex].id);
     displayTripCost.innerText = `Your quoted price: 
-        ${allDestinationsData.findCost(parseInt(durationInput.value),parseInt(travelersInput.value),parseInt(destinationInput[destinationInput.selectedIndex].id))}$`;
+        ${allDestinationsData.findCost(duration,numTravelers,destinationId)}$`;
         displayTripCost.classList.remove("hidden");
 }
 

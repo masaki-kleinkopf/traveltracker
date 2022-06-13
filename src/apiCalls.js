@@ -1,4 +1,4 @@
-const getData = (api,id) => {
+const getData = (api, id) => {
     if (id){
         return fetch(`http://localhost:3001/api/v1/${api}/${id}`).then(
             (response) => response.json()
@@ -21,7 +21,6 @@ const postData = (apiName,data) => {
     let endpoint = `http://localhost:3001/api/v1/${apiName}`
     return fetch(endpoint, postDetails)
       .then(response => {
-        console.log(response)
         if (!response.ok) {
           console.log('Sorry! Something went wrong')
         }
