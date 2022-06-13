@@ -20,6 +20,7 @@ let userTrips;
 let pastUserTrips;
 let futureUserTrips;
 let pendingUserTrips;
+let currentUserTrips;
 let tripRequestInfo;
 
 
@@ -64,7 +65,8 @@ const createUserTrips = () => {
     userTrips = allTripsData.getAllTrips(currentUser);
     pastUserTrips = allTripsData.getPastTrips(userTrips,currentDate);
     futureUserTrips = allTripsData.getFutureTrips(userTrips,currentDate);
-    pendingUserTrips = allTripsData.getPendingTrips(userTrips)
+    pendingUserTrips = allTripsData.getPendingTrips(userTrips);
+    currentUserTrips = allTripsData.getCurrentTrips(userTrips,currentDate);
 }
 
 
@@ -111,6 +113,7 @@ const loadCards = (trips) => {
     trips.forEach(trip => {
         let foundDestination = allDestinationsData.findDestinationByTrip(trip);
         if (trip.status === 'approved'){
+            console.log(foundDestination.alt)
             cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
             <img src =${foundDestination.image} alt= ${foundDestination.alt}>
@@ -131,6 +134,7 @@ const loadCards = (trips) => {
         `
         }
     })
+    console.log(cardDisplay)
 }
 
 const getTodaysDate = () => {
@@ -170,6 +174,9 @@ const loadCardOnClick = (event) => {
     } 
     if (event.target.id === 'pending-trips'){
         loadCards(pendingUserTrips)
+    }
+    if (event.target.id === 'present-trips'){
+        loadCards(currentUserTrips)
     }
 }
 

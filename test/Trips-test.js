@@ -70,6 +70,31 @@ describe("Trips", () => {
             }])
     })
 
+    it("should get current trips by user's trips and date", () => {
+        let userTrips = trips.getAllTrips(currentUser)
+        expect(trips.getCurrentTrips(userTrips, "2021/09/20")).to.deep.equal([{
+            "id": 1,
+            "userID": 1,
+            "destinationID": 1,
+            "travelers": 1,
+            "date": "2021/09/16",
+            "duration": 8,
+            "status": "pending",
+            "suggestedActivities": []
+            }])
+        expect(trips.getCurrentTrips(userTrips, "2022/10/20")).to.deep.equal([{
+            "id": 5,
+            "userID": 1,
+            "destinationID": 5,
+            "travelers": 5,
+            "date": "2022/10/05",
+            "duration": 18,
+            "status": "approved",
+            "suggestedActivities": []
+            }])
+        expect(trips.getCurrentTrips(userTrips, "2021/09/30")).to.deep.equal([])
+    })
+
     it("should get future trips by user's trips and date",() => {
         let userTrips = trips.getAllTrips(currentUser)
         expect(trips.getFutureTrips(userTrips, date)).to.deep.equal([{

@@ -19,9 +19,21 @@ export default class Trips {
     //    let allTrips = this.getAllTrips(user)
        return userTrips.filter(trip => {
            let today = new Date (date);
-           let tripDate = new Date (trip.date)
+           let tripDate = new Date (trip.date);
            return tripDate < today
        })
+    }
+
+    getCurrentTrips(userTrips,date){
+        return userTrips.filter(trip => {
+            let newDate = new Date (trip.date);
+            newDate.setDate(newDate.getDate() + trip.duration)
+            let today = new Date(date)
+            let startDate = new Date (trip.date);
+            if (today >= startDate && today <= newDate) {
+                return trip;
+            }
+        })
     }
 
     getFutureTrips(userTrips,date) {
