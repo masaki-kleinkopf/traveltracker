@@ -15,7 +15,7 @@ let allTripsData;
 let allDestinationsData;
 let userID;
 let currentUser;
-let currentDate = "2022/06/09"
+let currentDate;
 let userTrips;
 let pastUserTrips;
 let futureUserTrips;
@@ -40,10 +40,14 @@ const loginButton = document.querySelector("#login-submit");
 const mainDisplay = document.querySelector(".main-display");
 const signIn = document.querySelector(".sign-in-container");
 const logInErrorMessage = document.querySelector("#login-error-message");
-const displayButtons = Array.from(document.querySelectorAll(".display-button"))
+const displayButtons = Array.from(document.querySelectorAll(".display-button"));
+const submitErrorMessage = document.querySelector("#submit-error-message")
+const submitSuccessfulMessage = document.querySelector("#submit-success-message")
+
 
 
 const createAllData = (data) =>{
+    setTodaysDate();
     allTravelersData = new Travelers (data[0].travelers);
     console.log(allTravelersData)
     currentUser = new Traveler(data[1]);
@@ -80,7 +84,6 @@ const fetchData = () => {
 
 
 const createTripRequestInfo = () => {
-    
     tripRequestInfo ={
         id: Date.now(),
         userID: currentUser.id,
@@ -98,7 +101,7 @@ const createTripRequestInfo = () => {
 
 
 const postNewTrip = () => {
-    postData('trips',tripRequestInfo).then((data) => {
+    postData('trips',tripRequestInfo).then(() => {
         fetchData()
     });
 }
@@ -128,6 +131,18 @@ const loadCards = (trips) => {
         `
         }
     })
+}
+
+const getTodaysDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    return yyyy + '/' + mm + '/' + dd;
+  }
+
+const setTodaysDate = () => {
+    currentDate = getTodaysDate()
 }
 
 const updateWelcome = () => {
@@ -208,6 +223,6 @@ displayButtons.forEach(button => {
  quoteButton.addEventListener("click",displayQuote)
  loginButton.addEventListener("click", evaluateLogin)
 
-
+export { submitErrorMessage, submitSuccessfulMessage}
 
 
