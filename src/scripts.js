@@ -142,7 +142,9 @@ const getTodaysDate = () => {
   }
 
 const setTodaysDate = () => {
-    currentDate = getTodaysDate()
+    currentDate = getTodaysDate();
+    let isoDate = currentDate.split('/').join('-')
+    startInput.setAttribute('min', isoDate)
 }
 
 const updateWelcome = () => {
