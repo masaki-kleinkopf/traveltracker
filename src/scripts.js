@@ -161,15 +161,12 @@ const showTotalSpent = () => {
 //refactor
 const loadCardOnClick = (event) => {
     if (event.target.id === 'past-user-trips'){
-        console.log(event.target.id)
         loadCards(pastUserTrips)
     } 
     if (event.target.id === 'all-trips'){
-        console.log(event.target.id)
         loadCards(userTrips)
     } 
     if (event.target.id === 'future-user-trips'){
-        console.log(event.target.id)
         loadCards(futureUserTrips)
     } 
     if (event.target.id === 'pending-trips'){
@@ -215,16 +212,8 @@ const evaluateLogin = (event) => {
         console.log(usernameNumber)
         logInErrorMessage.classList.remove("hidden")
     }
-    
 }
 
-
-// window.addEventListener("load", () => {
-//     fetchData()
-//  });
-
-
-//refactor to add eventListeners with forEach
 displayButtons.forEach(button => {
     button.addEventListener("click", loadCardOnClick)
 })
