@@ -108,7 +108,7 @@ ul.navbar li:hover {
   flex-direction: column;
   justify-content: center;
   color:black;
-  font-weight:200
+  font-weight:200;
 }
 
 .hidden {

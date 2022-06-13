@@ -2,10 +2,12 @@ const getData = (api, id) => {
     if (id){
         return fetch(`http://localhost:3001/api/v1/${api}/${id}`).then(
             (response) => response.json()
+            .catch(err => console.log(err))
         );
     } else {
         return fetch(`http://localhost:3001/api/v1/${api}`).then(
             (response) => response.json()
+            .catch(err => console.log(err))
         );
     }
 };
@@ -26,6 +28,7 @@ const postData = (apiName,data) => {
         }
         return response.json()
       })
+      .catch(err => console.log(err))
   }
 
   export { getData, postData };

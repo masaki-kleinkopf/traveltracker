@@ -26,10 +26,6 @@ let tripRequestInfo;
 const cardDisplay = document.querySelector(".data-display");
 const welcomeDisplay = document.querySelector(".welcome")
 const costDisplay = document.querySelector(".user-info")
-const pastTripsButton = document.querySelector("#past-user-trips");
-const allTripsButton = document.querySelector("#all-trips");
-const futureTripsButton = document.querySelector("#future-user-trips");
-const pendingTrips = document.querySelector("#pending-trips")
 const submitButton = document.querySelector("#submit-button");
 const quoteButton = document.querySelector("#quote-button")
 const startInput = document.querySelector("#start");
@@ -42,12 +38,14 @@ const usernameInput = document.querySelector("#username-input");
 const passwordInput = document.querySelector("#password-input");
 const loginButton = document.querySelector("#login-submit");
 const mainDisplay = document.querySelector(".main-display");
-const signIn = document.querySelector(".sign-in-container")
-const logInErrorMessage = document.querySelector("#login-error-message")
+const signIn = document.querySelector(".sign-in-container");
+const logInErrorMessage = document.querySelector("#login-error-message");
+const displayButtons = Array.from(document.querySelectorAll(".display-button"))
 
 
 const createAllData = (data) =>{
     allTravelersData = new Travelers (data[0].travelers);
+    console.log(allTravelersData)
     currentUser = new Traveler(data[1]);
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
@@ -84,7 +82,6 @@ const fetchData = () => {
 const createTripRequestInfo = () => {
     
     tripRequestInfo ={
-        //refactor id
         id: Date.now(),
         userID: currentUser.id,
         destinationID: parseInt(destinationInput[destinationInput.selectedIndex].id),
@@ -183,8 +180,8 @@ const evaluateLogin = (event) => {
     const password = passwordInput.value;
     const splitUsername = username.split('');
     const usernameWord = splitUsername.slice(0,8).join('');
-    const usernameNumber = splitUsername.slice(8,10).join('');
-    if (usernameWord === "traveler" && password === "traveler"){
+    const usernameNumber = parseInt(splitUsername.slice(8,10).join(''));
+    if (usernameWord === "traveler" && password === "traveler" && typeof usernameNumber === "number" && usernameNumber > 0 && usernameNumber < 51){
         signIn.classList.add("hidden");
         mainDisplay.classList.remove("hidden");
         userID = parseInt(usernameNumber);
@@ -204,10 +201,9 @@ const evaluateLogin = (event) => {
 
 
 //refactor to add eventListeners with forEach
- pastTripsButton.addEventListener("click", loadCardOnClick);
- allTripsButton.addEventListener("click", loadCardOnClick)
- futureTripsButton.addEventListener("click", loadCardOnClick)
- pendingTrips.addEventListener("click",loadCardOnClick)
+displayButtons.forEach(button => {
+    button.addEventListener("click", loadCardOnClick)
+})
  submitButton.addEventListener("click",createTripRequestInfo)
  quoteButton.addEventListener("click",displayQuote)
  loginButton.addEventListener("click", evaluateLogin)
