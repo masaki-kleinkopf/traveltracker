@@ -156,7 +156,11 @@ const updateWelcome = () => {
 }
 
 const showTotalSpent = () => {
-    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}$</p>`
+    console.log(allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate))
+    console.log(userTrips)
+    console.log(allDestinationsData)
+    console.log(currentDate)
+    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(currentUser, allDestinationsData, currentDate)}$</p>`
 }
 //refactor
 const loadCardOnClick = (event) => {
