@@ -91,7 +91,7 @@ describe("Trips", () => {
             "suggestedActivities": []
             }])
         expect(trips.getCurrentTrips(currentUser, "2021/09/30")).to.deep.equal([])
-    })
+    });
 
     it("should get future trips by user's trips and date",() => {
         expect(trips.getFutureTrips(currentUser, date)).to.deep.equal([{
@@ -114,7 +114,7 @@ describe("Trips", () => {
             "status": "approved",
             "suggestedActivities": []
             }])
-    })
+    });
 
     it("should get filter for pending status", () => {
         expect(trips.getPendingTrips(currentUser)).to.deep.equal([{
@@ -127,10 +127,9 @@ describe("Trips", () => {
             "status": "pending",
             "suggestedActivities": []
             }])
-    })
+    });
+
     it("should get the total spent for all trips", () => {
         expect(trips.getTotalSpent(currentUser, destinations, date)).to.equal(5401)
-    })
-
-
-})
+    });
+});

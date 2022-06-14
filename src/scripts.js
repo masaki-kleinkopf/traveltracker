@@ -50,7 +50,7 @@ const populateData = (data) => {
     currentUser = new Traveler(data[1]);
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
-}
+};
 
 const createAllData = (data) =>{
     setTodaysDate();
@@ -60,7 +60,7 @@ const createAllData = (data) =>{
     updateWelcome();
     showTotalSpent();
     addDestinationOptions();
-}
+};
 
 const createUserTrips = () => {
     userTrips = allTripsData.getAllTrips(currentUser);
@@ -70,7 +70,6 @@ const createUserTrips = () => {
     currentUserTrips = allTripsData.getCurrentTrips(currentUser,currentDate);
 };
 
-
 const fetchData = () => {
     Promise.all([
         getData("travelers"),
@@ -78,13 +77,12 @@ const fetchData = () => {
         getData("trips"),
         getData("destinations"),
       ]).then(data => {
-        createAllData(data)
+        createAllData(data);
       })
       .catch((error) =>
       console.log(error, "Error")
     );
-}
-
+};
 
 const createTripRequestInfo = () => {
     tripRequestInfo ={
@@ -97,16 +95,15 @@ const createTripRequestInfo = () => {
         status:'pending',
         suggestedActivities:[]
     };
-    form.reset()
-    postNewTrip()
-}
-
+    form.reset();
+    postNewTrip();
+};
 
 const postNewTrip = () => {
     postData('trips',tripRequestInfo).then(() => {
-        fetchData()
+        fetchData();
     });
-}
+};
 
 const loadCards = (trips) => {
     cardDisplay.innerHTML = ''
@@ -133,9 +130,9 @@ const loadCards = (trips) => {
             PENDING
         </div>
         `
-        }
-    })
-}
+        };
+    });
+};
 
 const getTodaysDate = () => {
     let today = new Date();
@@ -143,43 +140,39 @@ const getTodaysDate = () => {
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
     return yyyy + '/' + mm + '/' + dd;
-  }
+  };
 
 const setTodaysDate = () => {
     currentDate = getTodaysDate();
-    let isoDate = currentDate.split('/').join('-')
-    startInput.setAttribute('min', isoDate)
-}
+    let isoDate = currentDate.split('/').join('-');
+    startInput.setAttribute('min', isoDate);
+};
 
 const updateWelcome = () => {
     welcomeDisplay.innerText = `Hi ${currentUser.getFirstName()}`
-}
+};
 
 const showTotalSpent = () => {
-    console.log(allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate))
-    console.log(userTrips)
-    console.log(allDestinationsData)
-    console.log(currentDate)
     costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(currentUser, allDestinationsData, currentDate)}$</p>`
-}
-//refactor
+};
+
 const loadCardOnClick = (event) => {
     if (event.target.id === 'past-user-trips'){
-        loadCards(pastUserTrips)
-    } 
+        loadCards(pastUserTrips);
+    };
     if (event.target.id === 'all-trips'){
-        loadCards(userTrips)
-    } 
+        loadCards(userTrips);
+    }; 
     if (event.target.id === 'future-user-trips'){
-        loadCards(futureUserTrips)
-    } 
+        loadCards(futureUserTrips);
+    }; 
     if (event.target.id === 'pending-trips'){
-        loadCards(pendingUserTrips)
-    }
+        loadCards(pendingUserTrips);
+    };
     if (event.target.id === 'present-trips'){
-        loadCards(currentUserTrips)
-    }
-}
+        loadCards(currentUserTrips);
+    };
+};
 
 const displayQuote = () => {
     const duration = parseInt(durationInput.value);
@@ -188,15 +181,14 @@ const displayQuote = () => {
     displayTripCost.innerText = `Your quoted price: 
         ${allDestinationsData.findCost(duration,numTravelers,destinationId)}$`;
         displayTripCost.classList.remove("hidden");
-}
-
+};
 
 const addDestinationOptions = () => {
     allDestinationsData.destinationsData.forEach(destination => {
         destinationInput.innerHTML += `
         <option value '${destination.destination}' id=${destination.id}>${destination.destination}</option>`
-    })
-}
+    });
+};
 
 const evaluateLogin = (event) => {
     event.preventDefault()
@@ -212,15 +204,15 @@ const evaluateLogin = (event) => {
         fetchData();
     } else {
         logInErrorMessage.classList.remove("hidden")
-    }
-}
+    };
+};
 
 displayButtons.forEach(button => {
-    button.addEventListener("click", loadCardOnClick)
-})
- submitButton.addEventListener("click",createTripRequestInfo)
- quoteButton.addEventListener("click",displayQuote)
- loginButton.addEventListener("click", evaluateLogin)
+    button.addEventListener("click", loadCardOnClick);
+});
+ submitButton.addEventListener("click",createTripRequestInfo);
+ quoteButton.addEventListener("click",displayQuote);
+ loginButton.addEventListener("click", evaluateLogin);
 
 export { submitErrorMessage, submitSuccessfulMessage}
 

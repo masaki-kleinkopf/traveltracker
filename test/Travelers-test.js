@@ -7,9 +7,9 @@ describe("Travelers", () => {
 
     beforeEach(() => {
         travelers = new Travelers (travelersData);
-    })
+    });
 
     it("should take in travelers data", () => {
         expect(travelers.travelersData).to.deep.equal(travelersData)
-    })
-})
+    });
+});

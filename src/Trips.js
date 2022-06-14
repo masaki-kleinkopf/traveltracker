@@ -6,14 +6,14 @@ export default class Trips {
     getAllTrips(user) {
        let allTrips = this.tripsData.filter(data => {
             return data.userID === user.id
-        })
+        });
         let sortedTrips = allTrips.sort((a,b) => {
             const date1 = new Date (a.date)
             const date2 = new Date (b.date)
             return date1 - date2
-        })
+        });
         return sortedTrips
-    }
+    };
 
     getPastTrips(user,date) {
         let userTrips = this.getAllTrips(user);
@@ -33,9 +33,9 @@ export default class Trips {
             let startDate = new Date (trip.date);
             if (today >= startDate && today <= newDate) {
                 return trip;
-            }
-        })
-    }
+            };
+        });
+    };
 
     getFutureTrips(user,date) {
         let userTrips = this.getAllTrips(user)
@@ -43,8 +43,8 @@ export default class Trips {
            let today = new Date (date);
            let tripDate = new Date (trip.date)
            return tripDate > today
-       })
-    }
+       });
+    };
 
     getPendingTrips(user){
         let userTrips = this.getAllTrips(user);
@@ -55,8 +55,8 @@ export default class Trips {
             return false;
         } else {
             return pendingTrips;
-        }
-    }
+        };
+    };
 
     getTotalSpent(user, destinations, date) {
         let userTrips = this.getAllTrips(user);
