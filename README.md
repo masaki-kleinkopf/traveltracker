@@ -40,7 +40,7 @@ Travel tracker is an app lets a user keep track of their trips, with clean displ
 Mocha and chai as well as Chrome Dev Tools
 
 ### GIF
-- ![Demo](https://user-images.githubusercontent.com/97985027/173680247-9e013079-c11b-4ffa-8132-bacf92621cb4.mov)
+-![traveltrackergif](https://user-images.githubusercontent.com/97985027/173680966-6f1a3aa2-2473-4e9b-8bb2-9bd67d3f6c55.gif)
 
 
 
