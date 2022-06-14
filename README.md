@@ -29,7 +29,6 @@ Travel tracker is an app lets a user keep track of their trips, with clean displ
 ## Challenges:
 - Planning and implementing class structure
 - Making the website accessible, especially for tabbing.
-- 
 
 ## Wins:
 - Successfully using fetch API to get and post data.
@@ -40,10 +39,8 @@ Travel tracker is an app lets a user keep track of their trips, with clean displ
 ## Testing:
 Mocha and chai as well as Chrome Dev Tools
 
-### Example of Project:
-- ![Demo of All Tabs](./src/images/allTabs.gif)
-- ![Demo of Filter By Date](./src/images/changeDate.gif)
-- ![Demo of the Data Posting](./src/images/postData.gif)
+### GIF
+- ![Demo](https://user-images.githubusercontent.com/97985027/173680247-9e013079-c11b-4ffa-8132-bacf92621cb4.mov)
 
 
 
