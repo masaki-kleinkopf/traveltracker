@@ -6,7 +6,7 @@ The details and setup of this project are outline in [this project spec](https:/
 
 ## Overview:
 
-The travel tracker app lets a user keep track of their trips, with displays for past, present, upcoming and all trips. Additionally, a user can book their own trip. The app give them a quote before booking, and also displays total spent on trips for the current calendar year.
+Travel tracker is an app lets a user keep track of their trips, with clean displays for past, present, upcoming and all trips. Additionally, a user can book their own trip. A quote can be calculated before booking, and the app also displays total spent on trips for the current calendar year. 
 
 ## Goals:
 
