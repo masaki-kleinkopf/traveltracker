@@ -17,11 +17,11 @@ describe("Travelers", () => {
             "status": "approved",
             "suggestedActivities": []
             }
-    })
+    });
 
     it("should take in travelers data", () => {
         expect(destinations.destinationsData).to.deep.equal(destinationsData)
-    })
+    });
 
     it("should be able to get a destination by trip", () => {
         let expectedFoundTrip = {
@@ -34,9 +34,9 @@ describe("Travelers", () => {
             };
 
         expect(destinations.findDestinationByTrip(trip)).to.deep.equal(expectedFoundTrip)
-    })
+    });
 
     it("should be able to find the cost of a trip with given duration, number of travelers, and destination id", () => {
         expect(destinations.findCost(2,2,1)).to.equal(1034)
-    })
-})
+    });
+});

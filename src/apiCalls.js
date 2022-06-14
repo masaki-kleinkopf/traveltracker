@@ -10,7 +10,7 @@ const getData = (api, id) => {
             (response) => response.json()
             .catch(err => console.log(err))
         );
-    }
+    };
 };
 
 const postData = (apiName,data) => {
@@ -20,7 +20,7 @@ const postData = (apiName,data) => {
         headers: {
           'Content-Type': 'application/json'
         }
-      }
+      };
     let endpoint = `http://localhost:3001/api/v1/${apiName}`
     return fetch(endpoint, postDetails)
       .then(response => {
