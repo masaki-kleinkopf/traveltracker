@@ -45,15 +45,16 @@ const displayButtons = Array.from(document.querySelectorAll(".display-button"));
 const submitErrorMessage = document.querySelector("#submit-error-message")
 const submitSuccessfulMessage = document.querySelector("#submit-success-message")
 
-
-
-const createAllData = (data) =>{
-    setTodaysDate();
+const populateData = (data) => {
     allTravelersData = new Travelers (data[0].travelers);
-    console.log(allTravelersData)
     currentUser = new Traveler(data[1]);
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
+}
+
+const createAllData = (data) =>{
+    setTodaysDate();
+    populateData(data);
     createUserTrips();
     loadCards(userTrips);
     updateWelcome();
@@ -63,11 +64,11 @@ const createAllData = (data) =>{
 
 const createUserTrips = () => {
     userTrips = allTripsData.getAllTrips(currentUser);
-    pastUserTrips = allTripsData.getPastTrips(userTrips,currentDate);
-    futureUserTrips = allTripsData.getFutureTrips(userTrips,currentDate);
-    pendingUserTrips = allTripsData.getPendingTrips(userTrips);
-    currentUserTrips = allTripsData.getCurrentTrips(userTrips,currentDate);
-}
+    pastUserTrips = allTripsData.getPastTrips(currentUser,currentDate);
+    futureUserTrips = allTripsData.getFutureTrips(currentUser,currentDate);
+    pendingUserTrips = allTripsData.getPendingTrips(currentUser);
+    currentUserTrips = allTripsData.getCurrentTrips(currentUser,currentDate);
+};
 
 
 const fetchData = () => {
@@ -87,7 +88,7 @@ const fetchData = () => {
 
 const createTripRequestInfo = () => {
     tripRequestInfo ={
-        id: Date.now(),
+        id: (allTripsData.tripsData.length + 1),
         userID: currentUser.id,
         destinationID: parseInt(destinationInput[destinationInput.selectedIndex].id),
         travelers: parseInt(travelersInput.value),
@@ -96,7 +97,6 @@ const createTripRequestInfo = () => {
         status:'pending',
         suggestedActivities:[]
     };
-    console.log('postinfo',tripRequestInfo)
     form.reset()
     postNewTrip()
 }
@@ -113,12 +113,12 @@ const loadCards = (trips) => {
     trips.forEach(trip => {
         let foundDestination = allDestinationsData.findDestinationByTrip(trip);
         if (trip.status === 'approved'){
-            console.log(foundDestination.alt)
             cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
             <img src =${foundDestination.image} alt= ${foundDestination.alt}>
-            destination: ${foundDestination.destination}<br><br>
-            travelers: ${trip.travelers}<br><br>
+            destination: ${foundDestination.destination}<br>
+            travelers: ${trip.travelers}<br>
+            duration: ${trip.duration}<br>
             date: ${trip.date}
         </div>
         `
@@ -126,15 +126,15 @@ const loadCards = (trips) => {
             cardDisplay.innerHTML += `
         <div class="widget pending" id="${trip.id}"> 
             <img src =${foundDestination.image} alt=${foundDestination.alt}>
-            destination: ${foundDestination.destination}<br><br>
-            travelers: ${trip.travelers}<br><br>
-            date: ${trip.date}<br><br>
+            destination: ${foundDestination.destination}<br>
+            travelers: ${trip.travelers}<br>
+            days: ${trip.duration}<br>
+            date: ${trip.date}<br>
             PENDING
         </div>
         `
         }
     })
-    console.log(cardDisplay)
 }
 
 const getTodaysDate = () => {
@@ -156,7 +156,7 @@ const updateWelcome = () => {
 }
 
 const showTotalSpent = () => {
-    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}</p>`
+    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}$</p>`
 }
 //refactor
 const loadCardOnClick = (event) => {
@@ -178,7 +178,6 @@ const loadCardOnClick = (event) => {
 }
 
 const displayQuote = () => {
-    console.log(destinationInput[destinationInput.selectedIndex].id)
     const duration = parseInt(durationInput.value);
     const numTravelers = parseInt(travelersInput.value);
     const destinationId = parseInt(destinationInput[destinationInput.selectedIndex].id);
@@ -208,8 +207,6 @@ const evaluateLogin = (event) => {
         userID = parseInt(usernameNumber);
         fetchData();
     } else {
-        console.log(usernameWord)
-        console.log(usernameNumber)
         logInErrorMessage.classList.remove("hidden")
     }
 }
