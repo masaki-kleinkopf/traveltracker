@@ -1,4 +1,4 @@
-# FitLitty
+# travel tracker
 
 ## Setup
 
