@@ -31,11 +31,6 @@ ul.navbar li {
   margin-left: 30px;
 }
 
-ul.navbar li:hover {
-  color: #f1a208;
-  cursor: pointer;
-}
-
 
 .welcome {
   
@@ -115,10 +110,31 @@ ul.navbar li:hover {
   display: none;
 }
 
+.display-button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-size: 24px;
+    cursor: pointer;
+    outline: inherit;
+    margin-right: 5%;
+    margin-left: 5%;
+}
 
+.display-button:hover {
+  color: #f1a208;
+  cursor: pointer;
+}
+
+.display-button:focus {
+  outline: 3px solid #f1a208
+} 
 
 input {
   background-color: aliceblue;
+  box-shadow: 0 0 5px 0.5pt #D3D3D3;
 }
 
 select {

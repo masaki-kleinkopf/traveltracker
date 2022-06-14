@@ -10,7 +10,7 @@
     <title>Travel Tracker</title>
   </head>
   <body>
-    <header class>
+    <header>
       <h1>travel tracker</h1>
       <div class="sign-in-container">
         <form class="sign-in-form">
@@ -23,10 +23,10 @@
         </form>
         <p class="error-message hidden" id="login-error-message">try again</p>
       </div>
-      <h2 class="hidden" id="welcome-text"></h2>
     </header>
     <main class="hidden main-display">
       <aside class="information-bar">
+        <p>book a trip</p>
         <form class="user-form">
           <label for="start">Start Date:</label>
           <input type="date" name="start" id="start" required>
@@ -41,8 +41,8 @@
           <button type="button" name="button" class="button quote" id="quote-button">Need a Quote?</button>
           <p class="hidden" id="trip-cost"></p>
           <button type="button" name="button" class="button submit" id="submit-button">Request Trip</button>
-          <p class="error-message" id="trip-error-message"></p>
-          <p class="hidden" id="trip-request-message"><em>Trip request submitted. You'll hear back from us when it's confirmed!</em></p>
+          <p class="error-message hidden" id="submit-error-message">Please try again.</p>
+          <p class="hidden" id="submit-success-message">Trip request submitted.</p>
         </form>
         <section class="user-info">cost</section>
       </aside>
@@ -50,18 +50,19 @@
         <section class="title-bar">
           <h1 class="welcome">welcome</h1>
           <ul class="navbar">
-            <li
+            <button
               class="display-button"
+              type="button"
               id="all-trips"
               data-target="all-trips""
               role="button"
-              aria-pressed="false"
-              tabindex="0"
+            
             >
               all trips
             </li>
-            <li
+            <button
               class="display-button"
+              type="button"
               id="past-user-trips"
               data-target="past-user-trips""
               role="button"
@@ -70,8 +71,9 @@
             >
               past trips
             </li>
-            <li
+            <button
               class="display-button"
+              type="button"
               id="present-trips"
               data-target="present-trips""
               role="button"
@@ -80,8 +82,9 @@
             >
               present trips
             </li>
-            <li
+            <button
               class="display-button"
+              type="button"
               id="future-user-trips"
               data-target="future-user-trips"
               role="button"
@@ -90,8 +93,9 @@
             >
               upcoming trips
             </li>
-            <li
+            <button
               class="display-button"
+              type="button"
               id="pending-trips"
               data-target="pending-trips""
               role="button"

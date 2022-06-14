@@ -15,17 +15,30 @@ export default class Trips {
         return sortedTrips
     }
 
-    getPastTrips(userTrips,date) {
-    //    let allTrips = this.getAllTrips(user)
+    getPastTrips(user,date) {
+        let userTrips = this.getAllTrips(user);
        return userTrips.filter(trip => {
            let today = new Date (date);
-           let tripDate = new Date (trip.date)
+           let tripDate = new Date (trip.date);
            return tripDate < today
        })
     }
 
-    getFutureTrips(userTrips,date) {
-        // let userTrips = this.getAllTrips(user)
+    getCurrentTrips(user,date){
+        let userTrips = this.getAllTrips(user);
+        return userTrips.filter(trip => {
+            let newDate = new Date (trip.date);
+            newDate.setDate(newDate.getDate() + trip.duration)
+            let today = new Date(date)
+            let startDate = new Date (trip.date);
+            if (today >= startDate && today <= newDate) {
+                return trip;
+            }
+        })
+    }
+
+    getFutureTrips(user,date) {
+        let userTrips = this.getAllTrips(user)
         return userTrips.filter(trip => {
            let today = new Date (date);
            let tripDate = new Date (trip.date)
@@ -33,7 +46,8 @@ export default class Trips {
        })
     }
 
-    getPendingTrips(userTrips){
+    getPendingTrips(user){
+        let userTrips = this.getAllTrips(user);
         let pendingTrips = userTrips.filter(trip => {
            return trip.status === "pending"
         })
@@ -44,7 +58,8 @@ export default class Trips {
         }
     }
 
-    getTotalSpent(userTrips, destinations, date) {
+    getTotalSpent(user, destinations, date) {
+        let userTrips = this.getAllTrips(user);
         let filteredTripsForYear = userTrips.filter(trip => {
             return parseInt(trip.date.split("/")[0]) === parseInt(date.split("/")[0])
         })

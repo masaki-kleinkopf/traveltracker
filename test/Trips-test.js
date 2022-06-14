@@ -57,8 +57,7 @@ describe("Trips", () => {
     })
 
     it("should get past trips by user's trips and date", () => {
-        let userTrips = trips.getAllTrips(currentUser)
-        expect(trips.getPastTrips(userTrips, date)).to.deep.equal([{
+        expect(trips.getPastTrips(currentUser, date)).to.deep.equal([{
             "id": 1,
             "userID": 1,
             "destinationID": 1,
@@ -70,9 +69,32 @@ describe("Trips", () => {
             }])
     })
 
+    it("should get current trips by user's trips and date", () => {
+        expect(trips.getCurrentTrips(currentUser, "2021/09/20")).to.deep.equal([{
+            "id": 1,
+            "userID": 1,
+            "destinationID": 1,
+            "travelers": 1,
+            "date": "2021/09/16",
+            "duration": 8,
+            "status": "pending",
+            "suggestedActivities": []
+            }])
+        expect(trips.getCurrentTrips(currentUser, "2022/10/20")).to.deep.equal([{
+            "id": 5,
+            "userID": 1,
+            "destinationID": 5,
+            "travelers": 5,
+            "date": "2022/10/05",
+            "duration": 18,
+            "status": "approved",
+            "suggestedActivities": []
+            }])
+        expect(trips.getCurrentTrips(currentUser, "2021/09/30")).to.deep.equal([])
+    })
+
     it("should get future trips by user's trips and date",() => {
-        let userTrips = trips.getAllTrips(currentUser)
-        expect(trips.getFutureTrips(userTrips, date)).to.deep.equal([{
+        expect(trips.getFutureTrips(currentUser, date)).to.deep.equal([{
             "id": 4,
             "userID": 1,
             "destinationID": 3,
@@ -95,8 +117,7 @@ describe("Trips", () => {
     })
 
     it("should get filter for pending status", () => {
-        let userTrips = trips.getAllTrips(currentUser)
-        expect(trips.getPendingTrips(userTrips)).to.deep.equal([{
+        expect(trips.getPendingTrips(currentUser)).to.deep.equal([{
             "id": 1,
             "userID": 1,
             "destinationID": 1,
@@ -108,8 +129,7 @@ describe("Trips", () => {
             }])
     })
     it("should get the total spent for all trips", () => {
-        let userTrips = trips.getAllTrips(currentUser)
-        expect(trips.getTotalSpent(userTrips, destinations, date)).to.equal(5401)
+        expect(trips.getTotalSpent(currentUser, destinations, date)).to.equal(5401)
     })
 
 

@@ -15,11 +15,12 @@ let allTripsData;
 let allDestinationsData;
 let userID;
 let currentUser;
-let currentDate = "2022/06/09"
+let currentDate;
 let userTrips;
 let pastUserTrips;
 let futureUserTrips;
 let pendingUserTrips;
+let currentUserTrips;
 let tripRequestInfo;
 
 
@@ -40,15 +41,20 @@ const loginButton = document.querySelector("#login-submit");
 const mainDisplay = document.querySelector(".main-display");
 const signIn = document.querySelector(".sign-in-container");
 const logInErrorMessage = document.querySelector("#login-error-message");
-const displayButtons = Array.from(document.querySelectorAll(".display-button"))
+const displayButtons = Array.from(document.querySelectorAll(".display-button"));
+const submitErrorMessage = document.querySelector("#submit-error-message")
+const submitSuccessfulMessage = document.querySelector("#submit-success-message")
 
-
-const createAllData = (data) =>{
+const populateData = (data) => {
     allTravelersData = new Travelers (data[0].travelers);
-    console.log(allTravelersData)
     currentUser = new Traveler(data[1]);
     allTripsData = new Trips (data[2].trips);
     allDestinationsData = new Destinations (data[3].destinations);
+}
+
+const createAllData = (data) =>{
+    setTodaysDate();
+    populateData(data);
     createUserTrips();
     loadCards(userTrips);
     updateWelcome();
@@ -58,10 +64,11 @@ const createAllData = (data) =>{
 
 const createUserTrips = () => {
     userTrips = allTripsData.getAllTrips(currentUser);
-    pastUserTrips = allTripsData.getPastTrips(userTrips,currentDate);
-    futureUserTrips = allTripsData.getFutureTrips(userTrips,currentDate);
-    pendingUserTrips = allTripsData.getPendingTrips(userTrips)
-}
+    pastUserTrips = allTripsData.getPastTrips(currentUser,currentDate);
+    futureUserTrips = allTripsData.getFutureTrips(currentUser,currentDate);
+    pendingUserTrips = allTripsData.getPendingTrips(currentUser);
+    currentUserTrips = allTripsData.getCurrentTrips(currentUser,currentDate);
+};
 
 
 const fetchData = () => {
@@ -80,9 +87,8 @@ const fetchData = () => {
 
 
 const createTripRequestInfo = () => {
-    
     tripRequestInfo ={
-        id: Date.now(),
+        id: (allTripsData.tripsData.length + 1),
         userID: currentUser.id,
         destinationID: parseInt(destinationInput[destinationInput.selectedIndex].id),
         travelers: parseInt(travelersInput.value),
@@ -91,14 +97,13 @@ const createTripRequestInfo = () => {
         status:'pending',
         suggestedActivities:[]
     };
-    console.log('postinfo',tripRequestInfo)
     form.reset()
     postNewTrip()
 }
 
 
 const postNewTrip = () => {
-    postData('trips',tripRequestInfo).then((data) => {
+    postData('trips',tripRequestInfo).then(() => {
         fetchData()
     });
 }
@@ -111,8 +116,9 @@ const loadCards = (trips) => {
             cardDisplay.innerHTML += `
         <div class="widget" id="${trip.id}"> 
             <img src =${foundDestination.image} alt= ${foundDestination.alt}>
-            destination: ${foundDestination.destination}<br><br>
-            travelers: ${trip.travelers}<br><br>
+            destination: ${foundDestination.destination}<br>
+            travelers: ${trip.travelers}<br>
+            duration: ${trip.duration}<br>
             date: ${trip.date}
         </div>
         `
@@ -120,9 +126,10 @@ const loadCards = (trips) => {
             cardDisplay.innerHTML += `
         <div class="widget pending" id="${trip.id}"> 
             <img src =${foundDestination.image} alt=${foundDestination.alt}>
-            destination: ${foundDestination.destination}<br><br>
-            travelers: ${trip.travelers}<br><br>
-            date: ${trip.date}<br><br>
+            destination: ${foundDestination.destination}<br>
+            travelers: ${trip.travelers}<br>
+            days: ${trip.duration}<br>
+            date: ${trip.date}<br>
             PENDING
         </div>
         `
@@ -130,34 +137,47 @@ const loadCards = (trips) => {
     })
 }
 
+const getTodaysDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    return yyyy + '/' + mm + '/' + dd;
+  }
+
+const setTodaysDate = () => {
+    currentDate = getTodaysDate();
+    let isoDate = currentDate.split('/').join('-')
+    startInput.setAttribute('min', isoDate)
+}
+
 const updateWelcome = () => {
     welcomeDisplay.innerText = `Hi ${currentUser.getFirstName()}`
 }
 
 const showTotalSpent = () => {
-    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}</p>`
+    costDisplay.innerHTML = `<p>total spent this year: <br><br>${allTripsData.getTotalSpent(userTrips, allDestinationsData, currentDate)}$</p>`
 }
 //refactor
 const loadCardOnClick = (event) => {
     if (event.target.id === 'past-user-trips'){
-        console.log(event.target.id)
         loadCards(pastUserTrips)
     } 
     if (event.target.id === 'all-trips'){
-        console.log(event.target.id)
         loadCards(userTrips)
     } 
     if (event.target.id === 'future-user-trips'){
-        console.log(event.target.id)
         loadCards(futureUserTrips)
     } 
     if (event.target.id === 'pending-trips'){
         loadCards(pendingUserTrips)
     }
+    if (event.target.id === 'present-trips'){
+        loadCards(currentUserTrips)
+    }
 }
 
 const displayQuote = () => {
-    console.log(destinationInput[destinationInput.selectedIndex].id)
     const duration = parseInt(durationInput.value);
     const numTravelers = parseInt(travelersInput.value);
     const destinationId = parseInt(destinationInput[destinationInput.selectedIndex].id);
@@ -187,20 +207,10 @@ const evaluateLogin = (event) => {
         userID = parseInt(usernameNumber);
         fetchData();
     } else {
-        console.log(usernameWord)
-        console.log(usernameNumber)
         logInErrorMessage.classList.remove("hidden")
     }
-    
 }
 
-
-// window.addEventListener("load", () => {
-//     fetchData()
-//  });
-
-
-//refactor to add eventListeners with forEach
 displayButtons.forEach(button => {
     button.addEventListener("click", loadCardOnClick)
 })
@@ -208,6 +218,6 @@ displayButtons.forEach(button => {
  quoteButton.addEventListener("click",displayQuote)
  loginButton.addEventListener("click", evaluateLogin)
 
-
+export { submitErrorMessage, submitSuccessfulMessage}
 
 
