@@ -115,7 +115,7 @@ const loadCards = (trips) => {
             <img src =${foundDestination.image} alt= ${foundDestination.alt}>
             destination: ${foundDestination.destination}<br>
             travelers: ${trip.travelers}<br>
-            duration: ${trip.duration}<br>
+            days: ${trip.duration}<br>
             date: ${trip.date}
         </div>
         `
